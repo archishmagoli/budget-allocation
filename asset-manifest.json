@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/budget-allocation/static/css/main.595b41c5.css",
-    "main.js": "/budget-allocation/static/js/main.51948f53.js",
+    "main.js": "/budget-allocation/static/js/main.8c1cdf5a.js",
     "static/js/787.a7bc6143.chunk.js": "/budget-allocation/static/js/787.a7bc6143.chunk.js",
     "index.html": "/budget-allocation/index.html",
     "main.595b41c5.css.map": "/budget-allocation/static/css/main.595b41c5.css.map",
-    "main.51948f53.js.map": "/budget-allocation/static/js/main.51948f53.js.map",
+    "main.8c1cdf5a.js.map": "/budget-allocation/static/js/main.8c1cdf5a.js.map",
     "787.a7bc6143.chunk.js.map": "/budget-allocation/static/js/787.a7bc6143.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.595b41c5.css",
-    "static/js/main.51948f53.js"
+    "static/js/main.8c1cdf5a.js"
   ]
 }
