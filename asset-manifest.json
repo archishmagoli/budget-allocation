@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/budget-allocation/static/css/main.595b41c5.css",
+    "main.js": "/budget-allocation/static/js/main.daeed131.js",
+    "static/js/787.8b93079c.chunk.js": "/budget-allocation/static/js/787.8b93079c.chunk.js",
+    "index.html": "/budget-allocation/index.html",
+    "main.595b41c5.css.map": "/budget-allocation/static/css/main.595b41c5.css.map",
+    "main.daeed131.js.map": "/budget-allocation/static/js/main.daeed131.js.map",
+    "787.8b93079c.chunk.js.map": "/budget-allocation/static/js/787.8b93079c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.595b41c5.css",
+    "static/js/main.daeed131.js"
+  ]
+}
