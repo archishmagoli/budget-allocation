@@ -1,0 +1,18 @@
+.column {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.money-text {
+    padding-top: 0.5em;
+}
+
+.title {
+    margin-bottom: 0.5em;
+}
+
+.dropdowns {
+    margin-left: -1em;
+    width: auto;
+}
