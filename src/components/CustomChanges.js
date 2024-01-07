@@ -20,7 +20,8 @@ const CustomChanges = ({budget, moneySpent, allocation, changeAllocations, curre
         let amountChange = allocationType === "add" ? allocationValue : 0 - allocationValue;
 
         if (amountChange > budget - moneySpent) {
-            alert("The value cannot exceed the remaining funds " + currency + (budget - moneySpent) + ".")
+            alert("The value cannot exceed the remaining funds " + currency + (budget - moneySpent) + ".");
+            return;
         }
 
         let updatedAllocation = allocation.map((item) => department === item.name ? {name : item.name, amount : parseInt(item.amount + amountChange)} : item);

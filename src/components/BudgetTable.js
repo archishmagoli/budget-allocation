@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import increase from '../images/increase.png';
 import decrease from '../images/decrease.png';
 import CustomChanges from "./CustomChanges";
@@ -15,14 +15,18 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
     ]);
     
     // Calculate the total amount spent by summing up each allocation value
-    const calculateTotalSpent = () => {
+    const calculateTotalSpent = useCallback(() => {
         let total = 0;
         for (let i = 0; i < allocation.length; i++) {
             total += allocation[i].amount;
         }
 
         return total;
-    }
+    }, [allocation]);
+
+    useEffect(() => {
+        onSpentChange(calculateTotalSpent());
+    }, [allocation, onSpentChange, calculateTotalSpent])
 
     useEffect(() => {
         if (moneySpent !== 0 || budget !== 0) {
@@ -70,6 +74,7 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
     const deleteItem = (e) => {
         if (allocation.length === 1) {
             alert("You must have at least one department to budget for.");
+            return;
         }
 
         let itemToDelete = e.target.id.replace("_delete", "");
