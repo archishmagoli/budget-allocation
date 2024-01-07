@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import increase from '../images/increase.png';
 import decrease from '../images/decrease.png';
 import CustomChanges from "./CustomChanges";
+import { IconButton } from "rsuite";
+import WarningRoundIcon from '@rsuite/icons/WarningRound';
 
 const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
     const [allocation, setAllocation] = useState([
@@ -10,12 +12,17 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
         {name: "Sales", amount: 0},
         {name: "Human Resources", amount: 0},
         {name: "IT", amount: 0}
-    ]);    
+    ]);
+    
+    // Calculate the total amount spent by summing up each allocation value
+    const calculateTotalSpent = () => {
+        let total = 0;
+        for (let i = 0; i < allocation.length; i++) {
+            total += allocation[i].amount;
+        }
 
-    // Any time the allocation changes, change the total amount spent
-    useEffect(() => {
-        onSpentChange(calculateTotalSpent());
-    }, [allocation]);
+        return total;
+    }
 
     useEffect(() => {
         if (moneySpent !== 0 || budget !== 0) {
@@ -41,14 +48,14 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
                 alert("Cannot exceed remaining funds " + currency + (budget - moneySpent) + ".");
                 return;
             }
-            allocationItem = allocationItem.replace("_increase", "")
+            allocationItem = allocationItem.replace("_increase", "");
             change = 10;
         } else if (allocationItem.includes("decrease")) {
             if (moneySpent === 0) {
                 alert("Cannot decrease spent money to negative values.");
                 return;
             }
-            allocationItem = allocationItem.replace("_decrease", "")
+            allocationItem = allocationItem.replace("_decrease", "");
             change = -10;
         }
         
@@ -60,17 +67,15 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
         onSpentChange(totalSpent);
     }
 
-    // Calculate the total amount spent by summing up each allocation value
-    const calculateTotalSpent = () => {
-        let total = 0;
-
-        for (let i = 0; i < allocation.length; i++) {
-            total += allocation[i].amount;
+    const deleteItem = (e) => {
+        if (allocation.length == 1) {
+            alert("You must have at least one department to budget for.");
         }
 
-        return total;
+        let itemToDelete = e.target.id.replace("_delete", "");
+        let modifiedAllocation = allocation.filter(item => item.name != itemToDelete);
+        setAllocation(modifiedAllocation);
     }
-
 
     return (
         <div>
@@ -82,11 +87,12 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
                         <th scope="col">Amount Allocated</th>
                         <th scope="col">Increase by {currency}10</th>
                         <th scope="col">Decrease by {currency}10</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {allocation.map(item => (
-                        <tr key={item.name}>
+                        <tr key={item.name} style={{alignItems: 'center'}}>
                             <td>{item.name}</td>
                             <td>{currency}{item.amount}</td>
                             <td>
@@ -98,6 +104,9 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
                                 <form id={item.name + "_decrease"} onSubmit={handleClick}>
                                     <input type="image" src={decrease} alt="Increase Icon" style={{width: '15%', height: '50%'}}></input>
                                 </form>
+                            </td>
+                            <td>
+                                <IconButton icon={<WarningRoundIcon />} id={item.name + "_delete"} style={{width: '40%', height: '100%'}} onClick={deleteItem}/>
                             </td>
                         </tr>
                     ))}
