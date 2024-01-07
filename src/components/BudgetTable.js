@@ -68,12 +68,12 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
     }
 
     const deleteItem = (e) => {
-        if (allocation.length == 1) {
+        if (allocation.length === 1) {
             alert("You must have at least one department to budget for.");
         }
 
         let itemToDelete = e.target.id.replace("_delete", "");
-        let modifiedAllocation = allocation.filter(item => item.name != itemToDelete);
+        let modifiedAllocation = allocation.filter(item => item.name !== itemToDelete);
         setAllocation(modifiedAllocation);
     }
 
