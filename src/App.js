@@ -8,15 +8,27 @@ function App() {
   const [moneySpent, setMoneySpent] = useState(0);
     
   const handleCurrency = () => {
-      setCurrency(document.getElementById("currencyDropdown").value);
+    setCurrency(document.getElementById("currencyDropdown").value);
   }
 
   const changeBudget = () => {
-    setBudget(document.getElementById("userBudget").value);
+    let newBudget = document.getElementById("userBudget").value;
+
+    if (newBudget < moneySpent) {
+      alert("You cannot reduce the budget value lower than the spending.");
+      return;
+    }
+
+    setBudget(newBudget);
   }
 
   const changeMoneySpent = (amount) => {
     setMoneySpent(amount);
+  }
+
+  const clearValues = () => {
+    setMoneySpent(0);
+    setBudget(0);
   }
 
   return (
@@ -36,7 +48,7 @@ function App() {
           <div className="column col-sm" style={{backgroundColor: 'lightgreen'}}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <p className="money-text" style={{ marginRight: '0.25em'}}>Currency:</p>
-              <select class="form-control" id="currencyDropdown" value={currency} onChange={handleCurrency} style={{color: 'white', backgroundColor: 'green'}}>
+              <select className="form-control" id="currencyDropdown" value={currency} onChange={handleCurrency} style={{color: 'white', backgroundColor: 'green'}}>
                   <option defaultValue value="$">United States Dollar ($)</option>
                   <option value="£">English Pound (£)</option>
                   <option value="€">Euro (€)</option>
@@ -44,10 +56,11 @@ function App() {
               </select>
             </div>
           </div>
+          <button className="btn btn-danger" style={{width: 'auto'}} onClick={clearValues}>Clear All Values</button>
         </div>
       </div>
       <br></br>
-      <BudgetTable currency={currency} moneySpent={moneySpent} budget={budget} onSpentChange = {changeMoneySpent}/>
+      <BudgetTable currency={currency} moneySpent={moneySpent} budget={budget} onSpentChange={changeMoneySpent}/>
     </div>
   );
 }

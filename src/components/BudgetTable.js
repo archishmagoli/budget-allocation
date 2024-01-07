@@ -10,10 +10,17 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
         {name: "Sales", amount: 0},
         {name: "Human Resources", amount: 0},
         {name: "IT", amount: 0}
-    ])
+    ]);    
 
-    // If the budget amount changes, reset all values in the allocation table
+    // Any time the allocation changes, change the total amount spent
     useEffect(() => {
+        onSpentChange(calculateTotalSpent());
+    }, [allocation]);
+
+    useEffect(() => {
+        if (moneySpent !== 0 || budget !== 0) {
+            return;
+        }
         setAllocation([
             {name: "Marketing", amount: 0},
             {name: "Finance", amount: 0},
@@ -21,12 +28,7 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
             {name: "Human Resources", amount: 0},
             {name: "IT", amount: 0}
         ]);
-      }, [budget]);
-
-      // Any time the allocation changes, change the total amount spent
-      useEffect(() => {
-        onSpentChange(calculateTotalSpent());
-      }, [allocation])
+    }, [budget, moneySpent])
 
     // Handle increase and decrease button clicks
     const handleClick = (e) => {
@@ -52,8 +54,6 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
         
         let newAllocation = allocation.map((originalItem) => allocationItem === originalItem.name ? 
         {name: originalItem.name, amount: originalItem.amount + change} : originalItem)
-
-        console.log(newAllocation);
 
         setAllocation(newAllocation);
         let totalSpent = calculateTotalSpent();
@@ -103,7 +103,7 @@ const BudgetTable = ({currency, moneySpent, budget, onSpentChange}) => {
                     ))}
                 </tbody>
             </table>
-            <CustomChanges allocation = {allocation} changeAllocations = {setAllocation}/>
+            <CustomChanges budget={budget} moneySpent={moneySpent} allocation={allocation} changeAllocations={setAllocation} currency={currency}/>
         </div>
     )
 }
